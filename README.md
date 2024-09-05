@@ -6,6 +6,7 @@ testrep
 This repo contains work done for the APPM 4600 Numerical Methods and Scientific Computing class done by Byron Liu.
 
 The directory sturcture is as follows:
+
 testrep
 |_README.md
 |_Homeworks
