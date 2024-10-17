@@ -5,43 +5,16 @@ def driver():
 
 # test functions 
      #fixed point for all is 7^(1/5)
-     f1 = lambda x: x*(1+((7-x**5)/x**2)**3)
+     f1 = lambda x: (10/(x+4))**(0.5)
 
-     f2 = lambda x: x-(((x**5)-7)/x**2)
-
-     f3 = lambda x: x-(((x**5)-7)/5*(x**4))
-     
-     f4 = lambda x: x-(((x**5)-7)/12)
-
-     Nmax = 1000
+     Nmax = 100
      tol = 1e-10
 
 # test f1 '''
-     # x0 = 1.0
-     # [xstar,ier] = fixedpt(f1,x0,tol,Nmax)
-     # print('the approximate fixed point is:',xstar)
-     # print('f1(xstar):',f1(xstar))
-     # print('Error message reads:',ier)
-    
-#test f2 '''
-     # x0 = 1.0
-     # [xstar,ier] = fixedpt(f2,x0,tol,Nmax)
-     # print('the approximate fixed point is:',xstar)
-     # print('f2(xstar):',f2(xstar))
-     # print('Error message reads:',ier)
-    
-#test f3 '''
-     # x0 = 1.0
-     # [xstar,ier] = fixedpt(f3,x0,tol,Nmax)
-     # print('the approximate fixed point is:',xstar)
-     # print('f3(xstar):',f3(xstar))
-     # print('Error message reads:',ier)
-    
-#test f4 '''
      x0 = 1.0
-     [xstar,ier] = fixedpt(f4,x0,tol,Nmax)
-     print('the approximate fixed point is:',xstar)
-     print('f3(xstar):',f3(xstar))
+     [x,ier,count] = fixedptallappx(f1,x0,tol,Nmax)
+     print('the approximate fixed point for each iteration is:',x)
+     print('f1(xstar):',f1(x[count]))
      print('Error message reads:',ier)
 
 
@@ -66,6 +39,47 @@ def fixedpt(f,x0,tol,Nmax):
     xstar = x1
     ier = 1
     return [xstar, ier]
+
+#new subroutines
+def fixedptallappx(f,x0,tol,Nmax):
+
+    ''' x0 = initial guess''' 
+    ''' Nmax = max number of iterations'''
+    ''' tol = stopping tolerance'''
+
+    x = np.zeros((Nmax + 1,1))
+
+    count = 0
+    while (count < Nmax):
+       count = count + 1
+       x1 = f(x0)
+       x[count] = x1
+       if (abs(x1-x0) <tol):
+          ier = 0
+          return [x,ier]
+       x0 = x1
+
+    x[count + 1] = x1
+    ier = 1
+    return [x, ier, count]
+
+def compute_order(x, xstar):
+    ''' x = array of iterate values''' 
+    ''' xstar = fixed point'''
+
+
+    #|x_n+1 - x*|
+    diff1 = np.abs(x[1:-1]-xstar)
+    #|x_n - x*|
+    diff2 = np.abs(x[0:-1]-xstar)
+    #linear fit of logs to compute slope(alpha) and intercept(lambda)
+    fit = np.polyfit(np.log(diff2.flatten()), np.log(diff1.flatten()), 1)
+
+    #(x, )
+    _lambda = np.exp(fit[1])
+    alpha = fit[0]
+
+    return [_lambda, alpha]
     
 
 driver()

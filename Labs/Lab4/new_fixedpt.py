@@ -62,7 +62,7 @@ def fixedptallappx(f,x0,tol,Nmax):
        count = count + 1
        if (abs(x1-x0) <tol):
           ier = 0
-          return [x,ier]
+          return x,ier,count
        x0 = x1
 
     x[count] = x1
