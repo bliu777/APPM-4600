@@ -24,18 +24,20 @@ def driver():
     fex = np.zeros(Neval)
     for j in range(Neval):
       fex[j] = f(xeval[j]) 
+
+    print(f(xeval[0]))
       
     plt.figure()
     plt.plot(xeval,fex,'ro-')
     plt.plot(xeval,yeval,'bs-')
     plt.xlabel('x')
     plt.ylabel('f(x)') 
-    plt.show
+    plt.show()
 
     err = abs(yeval-fex)
     plt.figure()
     plt.plot(xeval,err,'ro-')
-    plt.show          
+    plt.show()          
 
     
     
