@@ -15,7 +15,7 @@ def driver():
     ''' Create interpolation nodes'''
     xint = np.zeros(N+1)
     for i in range(N+1):
-       xint[i] = (np.cos(2*(i + 1) - 1) * np.pi)/(2 * N)
+       xint[i] = (np.cos(2*(i + 1) - 1) * np.pi)/(2 * (N + 1))
     #xint = np.linspace(a,b,N+1)
 #    print('xint =',xint)
     '''Create interpolation data'''

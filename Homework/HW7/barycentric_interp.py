@@ -24,7 +24,7 @@ def driver():
     xeval = np.linspace(a,b,Neval+1)
     yeval= np.zeros(Neval+1)
 
-    ''' evaluate lagrange poly '''
+    ''' evaluate barycentric poly '''
     for kk in range(Neval+1):
        yeval[kk] = eval_barycentric(xeval[kk],xint,yint,N)
 
